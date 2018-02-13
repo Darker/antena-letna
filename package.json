@@ -1,0 +1,9 @@
+{
+  "name": "antena-letna",
+  "version": "0.0.0",
+  "description": "AntenaLetna",
+  "main": "server.js",
+  "author": {
+    "name": "mareda"
+  }
+}
