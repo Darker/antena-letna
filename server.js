@@ -59,6 +59,7 @@ app.use(express.static(path.resolve(__dirname, "web")));
 
 const HISTORY_DIR = path.join(__dirname,"./web/history/");
 const HISTORY_DIR_TEST = path.join(HISTORY_DIR, "test");
+const HISTORY_DIR_PROD = path.join(HISTORY_DIR, "production");
 
 const audioManagerTest = new StreamManager(app, "/antena_test.mp3", new CasterStream("http://mxxiv.caster.fm/"));
 
@@ -69,6 +70,11 @@ fx.mkdir(HISTORY_DIR_TEST, function (err) {
 });
 
 const audioManager = new StreamManager(app, "/antena.mp3", new CasterStream("http://antenaletna.caster.fm/"));
+fx.mkdir(HISTORY_DIR_TEST, function (err) {
+    const historyStream = fs.createWriteStream(path.join(HISTORY_DIR_PROD, "history.mp3"), { encoding: null });
+    audioManagerTest.sinks.push(historyStream);
+});
+
 
 io.on('connection', function (socket) {
     console.log('a user connected');
