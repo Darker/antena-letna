@@ -59,7 +59,7 @@ app.use(express.static(path.resolve(__dirname, "web")));
 
 const HISTORY_DIR = path.join(__dirname,"./web/history/");
 const HISTORY_DIR_TEST = path.join(HISTORY_DIR, "test");
-const HISTORY_DIR_PROD = path.join(HISTORY_DIR, "production");
+const HISTORY_DIR_PROD = path.join(HISTORY_DIR, "prod");
 
 const audioManagerTest = new StreamManager(app, "/antena_test.mp3", new CasterStream("http://mxxiv.caster.fm/"));
 
