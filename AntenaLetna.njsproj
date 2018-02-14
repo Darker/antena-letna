@@ -37,6 +37,9 @@
     <Compile Include="audio\StreamManager.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="web\class\DocumentReady.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="promises\PromiseTimeout.js">
       <SubType>Code</SubType>
     </Compile>
