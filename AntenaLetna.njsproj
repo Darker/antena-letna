@@ -53,7 +53,11 @@
     <Compile Include="web\class\Player.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="web\class\VolumeEditor.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="web\lib\browser-cookies.min.js" />
+    <Compile Include="web\lib\event-emitter.js" />
     <Compile Include="web\lib\js.cookie-2.2.0.min.js" />
     <Compile Include="web\main.js">
       <SubType>Code</SubType>
@@ -67,6 +71,7 @@
     <Content Include="web\img\logo.png" />
     <Content Include="web\img\logo.xcf" />
     <Content Include="web\img\sad.png" />
+    <Content Include="web\img\unknown.png" />
     <Content Include="web\index.html">
       <SubType>Code</SubType>
     </Content>

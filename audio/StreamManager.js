@@ -28,7 +28,7 @@ class StreamManager {
         this.source.on("streamReady", (stream) => {
             for (let i = 0, l = this.sinks.length; i < l; ++i) {
                 const sink = this.sinks[i];
-                stream.pipe(sink, false);
+                stream.pipe(sink, { end: false });
             }
         });
     }

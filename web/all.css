@@ -1,11 +1,21 @@
-﻿body, html {
+﻿:root {
+    --header_color: #b8d6ff;
+    --main_bg_color: #15359c;
+    /**Volume**/
+    --volume_darkest_gray: #3c3c3c;
+    --volume_medium_gray: #7d7c7c;
+    --volume_lightest_gray: #bebebe;
+}
+
+body, html {
     margin: 0px;
     padding:0px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 #all {
     width: 100vw;
     height: 100vh;
-    background-color: #b8d6ff;
+    background-color: var(--header_color);
     display: flex;
     flex-direction: column;
 }
@@ -15,24 +25,36 @@
     background-position-y: top;
     background-repeat: no-repeat;
     background-size:contain;
-    height: 20vh;
+    height: 40vh;
     margin:0;
     padding:0;
 }
+h1, h2, h3 {
+    text-align:center;
+}
+#main_container {
+    height: 100%;
+    width:100vw;
+    margin: 0;
+    padding: 0;
+    background-color: var(--main_bg_color);
+    flex: 1;
+}
 #player_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: aqua;
-    flex: 1;
 }
 #control_button {
     border-radius: 50%;
     width: 80pt;
     height: 80pt;
     margin: 0;
-    margin-left: auto;
-    margin-right: auto;
+    display:inline-block;
     padding: 0;
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.44);
@@ -63,6 +85,10 @@
 #control_button.sad .sad {
     display: block;
 }
+#control_button.loading .loading {
+    display: block;
+    cursor:wait;
+}
 #control_button .happy {
     background-image: url("img/happy.png");
     background-color:rgba(36, 142, 0, 0.51);
@@ -71,7 +97,54 @@
     background-image: url("img/sad.png");
     background-color: rgba(200, 0, 0, 0.51);
 }
-    #control_button .loading {
-        background-image: url("img/unknown.png");
-        background-color: rgba(0, 0, 100, 0.51);
-    }
+#control_button .loading {
+    background-image: url("img/unknown.png");
+    background-color: rgba(0, 0, 100, 0.51);
+}
+div.volume {
+    position: relative;
+    width: 15em;
+    height: 40pt;
+    margin: 0;
+    padding: 0;
+    margin-top:20pt;
+    margin-bottom:20pt;
+    margin-right:2em;
+    display: inline-block;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9f9f9+0,c9c9c9+56,afafaf+100 */
+    background: #f9f9f9; /* Old browsers */
+    background: -moz-linear-gradient(left, var(--volume_lightest_gray) 0%, var(--volume_medium_gray) 57%, var(--volume_darkest_gray) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,var(--volume_lightest_gray) 0%,var(--volume_medium_gray) 57%,var(--volume_darkest_gray) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, var(--volume_lightest_gray) 0%,var(--volume_medium_gray) 57%,var(--volume_darkest_gray) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#afafaf',GradientType=1 ); /* IE6-9 */
+}
+div.volume div.cover {
+    background-image: linear-gradient(to bottom right, var(--main_bg_color) 0%,var(--main_bg_color) 50%,rgba(255,255,255,0) 51%,rgba(255,255,255,0) 100%);
+    width: 15em;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+    margin: 0;
+    padding: 0;
+}
+div.volume div.value {
+    width: 20%;
+    height: 100%;
+    position: absolute;
+    z-index: 9;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+div.volume div.value div.color {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0bb200+0,fc7500+57,ff0202+100 */
+    background: #0bb200; /* Old browsers */
+    background: -moz-linear-gradient(left, #0bb200 0%, #fc7500 57%, #ff0202 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #0bb200 0%,#fc7500 57%,#ff0202 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #0bb200 0%,#fc7500 57%,#ff0202 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0bb200', endColorstr='#ff0202',GradientType=1 ); /* IE6-9 */
+    width: 15em;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

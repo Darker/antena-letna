@@ -1,4 +1,5 @@
-﻿
+﻿import VolumeEditor from "./VolumeEditor.js";
+
 class Player {
     /**
      * 
@@ -12,17 +13,28 @@ class Player {
         this.controlButton.addEventListener("click", () => {
             this.togglePlaying();
         });
+
+        this.volumeWidget = new VolumeEditor(this.div.querySelector(".volume"));
+        this.volumeWidget.volume = this.audio.volume;
         
         this.audio.addEventListener("playing",
             /** @param {Event} event **/
             (event) => {
-                this.drawPlayingState(Player.STATE_PLAYING);
+                if (this.audio.getAttribute('src') != "")
+                    this.drawPlayingState(Player.STATE_PLAYING);
             }
         );
+        this.audio.addEventListener("volumechange", () => {
+            this.volumeWidget.volume = this.audio.volume;
+        });
+        this.volumeWidget.on("volumechange", () => {
+            this.audio.volume = this.volumeWidget.volume;
+        });
         this.audio.addEventListener("waiting",
             /** @param {Event} event **/
             (event) => {
-                this.drawPlayingState(Player.STATE_LOADING);
+                if (this.audio.getAttribute('src') != "")
+                    this.drawPlayingState(Player.STATE_LOADING);
             }
         );
         this.audio.addEventListener("ended",
@@ -31,15 +43,20 @@ class Player {
                 this.drawPlayingState(Player.STATE_STOPPED);
             }
         );
+        this.audio.addEventListener("error",
+            /** @param {Event} event **/
+            (event) => {
+                this.drawPlayingState(Player.STATE_STOPPED);
+                if (this.audio.getAttribute('src') != "")
+                    this.stopAudio();
+            })
         this.drawPlayingState(this.state);
     }
     togglePlaying() {
         if (this.state == Player.STATE_LOADING)
             return;
         if (this.state == Player.STATE_PLAYING) {
-            this.audio.setAttribute("src", "");
-            this.audio.pause();
-            this.audio.load();
+            this.stopAudio();
             this.drawPlayingState(Player.STATE_STOPPED);
         }
         else {
@@ -47,6 +64,11 @@ class Player {
             this.audio.load();
             this.audio.play();
         }
+    }
+    stopAudio() {
+        this.audio.setAttribute("src", "");
+        this.audio.pause();
+        this.audio.load();
     }
     /**
      * Draws state as loading/playing/stopped. Actual value can be overriden using force argument
@@ -67,15 +89,17 @@ class Player {
         switch (this.state) {
             case Player.STATE_LOADING: {
                 this.controlButton.classList.add("loading");
+                console.log("Player state: loading");
                 break;
             }
             case Player.STATE_PLAYING: {
                 this.controlButton.classList.add("happy");
-                
+                console.log("Player state: playing");
                 break;
             }
             case Player.STATE_STOPPED: {
                 this.controlButton.classList.add("sad");
+                console.log("Player state: stopped");
                 break;
             }
             default: {

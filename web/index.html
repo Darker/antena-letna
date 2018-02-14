@@ -5,17 +5,28 @@
     <title>Anténa letná</title>
     <script type="module" src="main.js" async></script>
     <link rel="stylesheet" href="all.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
     <div id="all">
         <div id="logo"></div>
-        <div id="player_container">
-            <h2 id="status">Klepni na košištu poslouchej rádio!</h2>
-            <div id="control_button" class="sad">
-                <div class="happy icon">
+        <div id="main_container">
+            <div id="player_container">
+                <div class="volume">
+                    <div class="cover"></div>
+                    <div class="value">
+                        <div class="color"></div>
+                    </div>
                 </div>
-                <div class="sad icon"></div>
+                <div id="control_button" class="sad">
+                    <div class="happy icon">
+                    </div>
+                    <div class="sad icon"></div>
+                    <div class="loading icon"></div>
+                </div>
+
             </div>
+            <!-- <h2 id="status">Klepni na košištu a poslouchej rádio!</h2>-->
         </div>
     </div>
     <script src="./lib/js.cookie-2.2.0.min.js"></script>
