@@ -30,30 +30,30 @@ const path = require("path");
 const StreamManager = require("./audio/StreamManager");
 const CasterStream = require("./audio/CasterStream")
 
-app.get("/es6enable", function (req, res) {
-    req.session.es6 = true;
-    res.set("Location", "/index.html");
-    res.end();
-});
+//app.get("/es6enable", function (req, res) {
+//    req.session.es6 = true;
+//    res.set("Location", "/index.html");
+//    res.end();
+//});
 
-app.use(function (err, req, res, next) {
-    if (req.path == "" || req.path == "/" || req.path == "/index.html") {
-        if (req.session.es6) {
-            fs.readFile(path.join(__dirname, "web/index.html"), function (error, result) {
-                if (error)
-                    next();
-                else {
-                    res.end(result.toString("utf8").replace(
-                        /<script id="main" type="([^"]+)" src="([^"]+)"><\/script>/i,
-                        '<script type="module" src="main.js" async> </script>'
-                    ));
-                }
-            });
-        }
-    }
+//app.use(function (err, req, res, next) {
+//    if (req.path == "" || req.path == "/" || req.path == "/index.html") {
+//        if (req.session.es6) {
+//            fs.readFile(path.join(__dirname, "web/index.html"), function (error, result) {
+//                if (error)
+//                    next();
+//                else {
+//                    res.end(result.toString("utf8").replace(
+//                        /<script id="main" type="([^"]+)" src="([^"]+)"><\/script>/i,
+//                        '<script type="module" src="main.js" async> </script>'
+//                    ));
+//                }
+//            });
+//        }
+//    }
 
-    next();
-});
+//    next();
+//});
 
 app.use(express.static(path.resolve(__dirname, "web")));
 
@@ -72,7 +72,7 @@ fx.mkdir(HISTORY_DIR_TEST, function (err) {
 const audioManager = new StreamManager(app, "/antena.mp3", new CasterStream("http://antenaletna.caster.fm/"));
 fx.mkdir(HISTORY_DIR_PROD, function (err) {
     const historyStream = fs.createWriteStream(path.join(HISTORY_DIR_PROD, "history.mp3"), { encoding: null });
-    audioManagerTest.sinks.push(historyStream);
+    audioManager.sinks.push(historyStream);
 });
 
 
