@@ -15,6 +15,7 @@
     "express-session": "^1.15.6",
     "lame": "^1.2.4",
     "memorystore": "^1.6.0",
+    "mkdir-recursive": "^0.4.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "socket.io": "^2.0.4",

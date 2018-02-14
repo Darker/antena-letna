@@ -32,11 +32,17 @@ const CasterStream = require("./audio/CasterStream")
 
 app.use(express.static(path.resolve(__dirname, "web")));
 
-
+const HISTORY_DIR = path.join(__dirname,"./web/history/");
+const HISTORY_DIR_TEST = path.join(HISTORY_DIR, "test");
 
 const audioManagerTest = new StreamManager(app, "/antena_test.mp3", new CasterStream("http://mxxiv.caster.fm/"));
-const historyStreamTest = fs.createWriteStream(path.join(__dirname, "./web/history/test/history.mp3"), { encoding: null });
-audioManagerTest.sinks.push(historyStreamTest);
+
+var fx = require('mkdir-recursive');
+fx.mkdir(HISTORY_DIR_TEST, function (err) {
+    const historyStreamTest = fs.createWriteStream(path.join(HISTORY_DIR_TEST, "history.mp3"), { encoding: null });
+    audioManagerTest.sinks.push(historyStreamTest);
+});
+
 
 const audioManager = new StreamManager(app, "/antena.mp3", new CasterStream("http://antenaletna.caster.fm/"));
 
