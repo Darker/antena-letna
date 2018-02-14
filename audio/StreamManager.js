@@ -84,12 +84,13 @@ class StreamManager {
 
 
             const id = this.requestIdIncrement++;
-            this.activeClients.push([req, res, id]);
+            this.activeClients.push([req, res, id, stream]);
             req.on("close", () => {
                 const index = this.activeClients.findIndex((clientInfo) => {
                     return clientInfo[2] == id;
                 });
                 if (index >= 0) {
+                    this.activeClients[index][3].unpipe(this.activeClients[index][1]);
                     this.activeClients.splice(index, 1);
                 }
                 if (this.activeClients.length < 1) {
