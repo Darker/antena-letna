@@ -28,9 +28,56 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AudioProxy.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\CasterStream.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\StreamManager.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="promises\PromiseTimeout.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="server.js" />
+    <Compile Include="web\cheet.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\Admin.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\Client.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\Player.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\lib\browser-cookies.min.js" />
+    <Compile Include="web\lib\js.cookie-2.2.0.min.js" />
+    <Compile Include="web\main.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="web\all.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="web\img\happy.png" />
+    <Content Include="web\img\logo.png" />
+    <Content Include="web\img\logo.xcf" />
+    <Content Include="web\img\sad.png" />
+    <Content Include="web\index.html">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="audio\" />
+    <Folder Include="promises\" />
+    <Folder Include="web\" />
+    <Folder Include="web\img\" />
+    <Folder Include="web\class\" />
+    <Folder Include="web\lib\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
