@@ -6,6 +6,7 @@
   "author": {
     "name": "mareda"
   },
+  "scripts": {"start": "node server.js"},
   "dependencies": {
     "eventemitter2": "^5.0.1",
     "express": "^4.16.2",
