@@ -70,7 +70,7 @@ fx.mkdir(HISTORY_DIR_TEST, function (err) {
 });
 
 const audioManager = new StreamManager(app, "/antena.mp3", new CasterStream("http://antenaletna.caster.fm/"));
-fx.mkdir(HISTORY_DIR_TEST, function (err) {
+fx.mkdir(HISTORY_DIR_PROD, function (err) {
     const historyStream = fs.createWriteStream(path.join(HISTORY_DIR_PROD, "history.mp3"), { encoding: null });
     audioManagerTest.sinks.push(historyStream);
 });
