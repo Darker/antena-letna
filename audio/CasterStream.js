@@ -35,5 +35,8 @@ class CasterStream extends AudioProxy {
         }
         throw new Error("Server offline or unavailable.");
     }
+    stopPrivate() {
+        this.stream.destroy();
+    }
 }
 module.exports = CasterStream;

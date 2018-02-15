@@ -34,6 +34,15 @@
     <Compile Include="audio\CasterStream.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="audio\LocalStream.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\RawStreamProxy.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\SocketHeaderReader.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="audio\StreamManager.js">
       <SubType>Code</SubType>
     </Compile>
@@ -65,8 +74,14 @@
     <Compile Include="web\main.js">
       <SubType>Code</SubType>
     </Compile>
+    <Content Include="login.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="settings.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="web\all.css">
       <SubType>Code</SubType>
     </Content>

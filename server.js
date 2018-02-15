@@ -1,15 +1,61 @@
 'use strict'
-
+const fs = require("fs");
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason, "\n", reason.stack);
     // application specific logging, throwing an error, or other logic here
 });
+const SETTINGS = JSON.parse(fs.readFileSync("settings.json", "utf8").replace(/^\uFEFF/, ''));
+SETTINGS.authentication = JSON.parse(fs.readFileSync("login.json", "utf8").replace(/^\uFEFF/, ''));
 
 const express = require('express');
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-const fs = require("fs");
+var createServer = require('http').createServer;
+
+const server = createServer(function (req, res) {
+    return app(req, res);
+});
+
+const LocalStream = require("./audio/LocalStream");
+const localStreamAudio = new LocalStream(server);
+localStreamAudio.password = SETTINGS.authentication.password;
+//var errcnt = 0;
+//server.on('clientError',
+//    /**
+//     * @param {Error} err
+//     * @param {NodeJS.Socket} socket
+//    */
+//    (err, socket) => {
+//    console.log("Client error: ", err.message);
+//    socket.on("data", (data) => {
+//        errcnt++;
+//        console.log("ERROR DATA:" + data);
+//        if (errcnt > 10)
+//            process.exit(1);
+//    });
+//    //socket.end();
+//});
+//server.on('upgrade',
+//    /**
+//     * @param {Request} request
+//     * @param {NodeJS.Socket} socket
+//     * @param {Buffer} head
+//    */
+//  (request, socket, head) => {
+//    console.log("Client upgrade: ", head.toString());
+//    //socket.on("data", (data) => {
+//    //    errcnt++;
+//    //    console.log("ERROR DATA:" + data);
+//    //    if (errcnt > 10)
+//    //        process.exit(1);
+//    //});
+//    //socket.end();
+//});
+
+//server.listen(1337, '127.0.0.1');
+
+var io = require('socket.io')(server);
+
+
 
 
 const session = require('express-session');
@@ -55,6 +101,24 @@ const CasterStream = require("./audio/CasterStream")
 //    next();
 //});
 
+//try {
+//    const morgan = require('morgan')
+//    app.use(morgan(function (tokens, req, res) {
+//        return [
+//            tokens.method(req, res),
+//            tokens.url(req, res),
+//            tokens.status(req, res),
+//            tokens.res(req, res, 'content-length'), '-',
+//            tokens['response-time'](req, res), 'ms'
+//        ].join(' ')
+//    }))
+//}
+//catch (e) {
+//    console.log("No morgan package, no logging!");
+//}
+
+
+
 app.use(express.static(path.resolve(__dirname, "web")));
 
 const HISTORY_DIR = path.join(__dirname,"./web/history/");
@@ -83,11 +147,16 @@ fx.mkdir(HISTORY_DIR_PROD, function (err) {
     audioManager.sinks.push(historyStream);
 });
 
+const localManager = new StreamManager(app, "/local.mp3", localStreamAudio);
+
 
 io.on('connection', function (socket) {
     console.log('a user connected');
 });
 const PORT = process.env.PORT || 3000;
-http.listen(PORT, function () {
+localStreamAudio.listen(PORT, function() {
     console.log('listening on *:'+PORT);
-});
+})
+//server.listen(PORT, function () {
+//    console.log('listening on *:'+PORT);
+//});

@@ -24,6 +24,9 @@ class VolumeEditor extends EventEmitter {
         this.elm.parentNode.addEventListener("mouseup", undrag);
         this.elm.parentNode.addEventListener("mouseleave", undrag);
         this.elm.parentNode.addEventListener("mousemove", this.calculateVolume.bind(this));
+        this.elm.addEventListener("click", (event) => {
+            this.calculateVolume(event, true);
+        });
     }
     get volume() {
         return this.vol;
@@ -38,8 +41,8 @@ class VolumeEditor extends EventEmitter {
      * @private
      * @param {MouseEvent} mouseEvent
      */
-    calculateVolume(mouseEvent) {
-        if (this.dragging) {
+    calculateVolume(mouseEvent, force) {
+        if (this.dragging || force===true) {
             const rect = this.elm.getBoundingClientRect();
             const width = rect.right - rect.left;
             const fromStart = mouseEvent.clientX - rect.left;

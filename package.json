@@ -13,9 +13,11 @@
     "eventemitter2": "^5.0.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "http-raw": "^2.1.0",
     "lame": "^1.2.4",
     "memorystore": "^1.6.0",
     "mkdir-recursive": "^0.4.0",
+    "parse-headers": "^2.0.1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "socket.io": "^2.0.4",
@@ -26,6 +28,7 @@
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.5.2",
+    "morgan": "^1.9.0",
     "webpack": "^2.6.1"
   }
 }

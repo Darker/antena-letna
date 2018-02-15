@@ -49,10 +49,11 @@ class AudioProxy extends EventEmitter {
     }
     stop() {
         if (this.stream) {
-            this.stream.destroy();
+            this.stopPrivate();
             this.stream = null;
         }
     }
+    stopPrivate() {}
     /**
      * @description Pipes the stream of this audio to the given writable stream
      * @param {NodeJS.WritableStream} out

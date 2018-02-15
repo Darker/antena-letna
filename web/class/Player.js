@@ -60,7 +60,7 @@ class Player {
             this.drawPlayingState(Player.STATE_STOPPED);
         }
         else {
-            this.audio.setAttribute("src", "antena.mp3");
+            this.audio.setAttribute("src", "local.mp3");
             this.audio.load();
             this.audio.play();
         }

@@ -75,6 +75,7 @@ class StreamManager {
         res.set("Cache-Control", "no-cache, no-store, must-revalidate");
         res.set("Pragma", "no-cache");
         res.set("Expires", "0");
+        res.set("Content-Type", "audio/mpeg");
         try {
             this.streamPromise = this.streamPromise || this.source.getStream();
             const stream = await this.streamPromise;
