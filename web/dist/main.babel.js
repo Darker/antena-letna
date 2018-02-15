@@ -1690,6 +1690,9 @@ var VolumeEditor = function (_EventEmitter) {
         _this.elm.parentNode.addEventListener("mouseup", undrag);
         _this.elm.parentNode.addEventListener("mouseleave", undrag);
         _this.elm.parentNode.addEventListener("mousemove", _this.calculateVolume.bind(_this));
+        _this.elm.addEventListener("click", function (event) {
+            _this.calculateVolume(event, true);
+        });
         return _this;
     }
 
@@ -1701,8 +1704,8 @@ var VolumeEditor = function (_EventEmitter) {
          * @private
          * @param {MouseEvent} mouseEvent
          */
-        value: function calculateVolume(mouseEvent) {
-            if (this.dragging) {
+        value: function calculateVolume(mouseEvent, force) {
+            if (this.dragging || force === true) {
                 var rect = this.elm.getBoundingClientRect();
                 var width = rect.right - rect.left;
                 var fromStart = mouseEvent.clientX - rect.left;
