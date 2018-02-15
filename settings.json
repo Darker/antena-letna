@@ -1,3 +1,7 @@
 ﻿{
-
+  "password_mode": "env",
+  "password_params": {
+    "env_name": "stream_password",
+    "file": "login.json"
+  }
 }
