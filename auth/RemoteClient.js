@@ -23,7 +23,7 @@ class RemoteClient extends Client {
         return this.io.handshake.session;
     }
     authAdmin(password) {
-        console.log("Login attempt!", password);
+        console.log("Login attempt!", password, " Real password: ", this.serverConfig.authentication.password);
         if (password == this.serverConfig.authentication.password) {
             this.makeAdmin();
             return true;

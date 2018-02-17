@@ -13,7 +13,6 @@ else {
     console.log("Loading password from process.env[\"" + SETTINGS.password_params.env_name+"\"]");
     SETTINGS.authentication = { password: process.env[SETTINGS.password_params.env_name] };
 }
-SETTINGS.authentication = JSON.parse(fs.readFileSync("login.json", "utf8").replace(/^\uFEFF/, ''));
 /// Convert Client.js
 {
     const ClientJS = fs.readFileSync(require.resolve("./web/class/Client.js")).toString();
