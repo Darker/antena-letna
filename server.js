@@ -6,10 +6,12 @@ process.on('unhandledRejection', (reason, p) => {
 });
 const SETTINGS = JSON.parse(fs.readFileSync("settings.json", "utf8").replace(/^\uFEFF/, ''));
 if (SETTINGS.password_mode == "file") {
+    console.log("Loading password from " + SETTINGS.password_params.file);
     SETTINGS.authentication = JSON.parse(fs.readFileSync(SETTINGS.password_params.file, "utf8").replace(/^\uFEFF/, ''));
 }
 else {
-    SETTINGS.authentication = process.env[SETTINGS.password_params.env_name];
+    console.log("Loading password from process.env[\"" + SETTINGS.password_params.env_name+"\"]");
+    SETTINGS.authentication = { password: process.env[SETTINGS.password_params.env_name] };
 }
 SETTINGS.authentication = JSON.parse(fs.readFileSync("login.json", "utf8").replace(/^\uFEFF/, ''));
 /// Convert Client.js
