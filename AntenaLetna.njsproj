@@ -47,6 +47,26 @@
     <Compile Include="audio\StreamManager.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="auth\Client.js" />
+    <Compile Include="auth\RemoteAdmin.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="auth\RemoteClient.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="webpack.config.js" />
+    <Compile Include="web\class\dialogs\Alert.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\dialogs\AsyncModal.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\dialogs\Prompt.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\dialogs\RpcDialog.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="web\class\DocumentReady.js">
       <SubType>Code</SubType>
     </Compile>
@@ -57,10 +77,16 @@
     <Compile Include="web\cheet.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="web\class\Admin.js">
+    <Compile Include="web\class\LocalAdmin.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="web\class\Client.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\LocalClient.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\LogEntry.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="web\class\Player.js">
@@ -86,6 +112,9 @@
     <Content Include="web\all.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="web\class\dialogs\dialogs.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="web\img\happy.png" />
     <Content Include="web\img\logo.png" />
     <Content Include="web\img\logo.xcf" />
@@ -97,8 +126,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="audio\" />
+    <Folder Include="auth\" />
     <Folder Include="promises\" />
     <Folder Include="web\" />
+    <Folder Include="web\class\dialogs\" />
     <Folder Include="web\img\" />
     <Folder Include="web\class\" />
     <Folder Include="web\lib\" />

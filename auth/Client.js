@@ -1,4 +1,5 @@
-﻿import EventEmitter from "../lib/event-emitter.js";
+// NOTE: this file is auto-generated from ./web/class/Client.js
+﻿const EventEmitter = require("eventemitter2");
 
 /**
  * @typedef {Object} RpcRequest
@@ -124,4 +125,4 @@ class Client extends EventEmitter {
         /// override this
     }
 }
-export default Client;
+module.exports = Client;

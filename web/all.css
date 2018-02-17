@@ -20,14 +20,14 @@ body, html {
     flex-direction: column;
 }
 #logo {
-    background-image: url("img/logo.png");
+    background-image: url("img/antena-letna.svg");
     background-position-x: center;
     background-position-y: top;
     background-repeat: no-repeat;
-    background-size:contain;
+    background-size: contain;
     height: 40vh;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
 h1, h2, h3 {
     text-align:center;
@@ -139,12 +139,28 @@ div.volume div.value {
 div.volume div.value div.color {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0bb200+0,fc7500+57,ff0202+100 */
     background: #0bb200; /* Old browsers */
-    background: -moz-linear-gradient(left, #0bb200 0%, #fc7500 57%, #ff0202 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, #0bb200 0%,#fc7500 57%,#ff0202 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, #0bb200 0%,#fc7500 57%,#ff0202 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background: -moz-linear-gradient(left, #0bb200 0%, #fc7500 85%, #ff0202 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #0bb200 0%,#fc7500 85%,#ff0202 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #0bb200 0%,#fc7500 85%,#ff0202 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0bb200', endColorstr='#ff0202',GradientType=1 ); /* IE6-9 */
     width: 15em;
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+
+/*  ADMIN CSS */
+div.adminPanel {
+
+}
+div.adminPanel div.errlog {
+    max-height: 20cm;
+    overflow-y:scroll;
+}
+div.adminPanel div.errlog div.entry {
+    border-color: black;
+    border-width: 0px;
+    border-style: solid;
+    border-bottom-width:1pt;
 }

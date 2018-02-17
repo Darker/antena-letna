@@ -28,6 +28,7 @@ module.exports = {
         path: path.resolve(__dirname, './web/dist'),
         filename: '[name].js'
     },
+    devtool: "source-map",
     //resolve: {
     //    modules: [
     //        //path.resolve(__dirname, 'voxsnap'),
@@ -45,7 +46,8 @@ module.exports = {
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
             include: /\.min\.([a-zA-Z0-9]+\.)?js$/,
-            minimize: true
+            minimize: true,
+            sourceMap: true
         }),
         new webpack.DefinePlugin({
             //__VERSION__: build_info.build_number,

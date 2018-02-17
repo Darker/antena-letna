@@ -1,6 +1,8 @@
 ﻿const AudioProxy = require("../AudioProxy");
 const PromiseTimeout = require("../promises/PromiseTimeout");
-class StreamManager {
+const EventEmitter = require("eventemitter2");
+const fx = require('mkdir-recursive');
+class StreamManager extends EventEmitter {
     /**
      * 
      * @param {Express} expressApp
@@ -8,6 +10,7 @@ class StreamManager {
      * @param {AudioProxy} source
      */
     constructor(expressApp, streamName, source) {
+        super();
         this.app = expressApp;
         this.name = streamName;
         this.app.get(streamName, this.handleRequest.bind(this));
@@ -30,6 +33,16 @@ class StreamManager {
                 const sink = this.sinks[i];
                 stream.pipe(sink, { end: false });
             }
+        });
+    }
+    setHistoryFile(path) {
+        fx.mkdir(path, function (err) {
+            if (err) {
+                console.error("Cannot open/create directory", path);
+                return;
+            }
+            const historyStreamTest = fs.createWriteStream(path.join(path, "history.mp3"), { encoding: null });
+            audioManagerTest.sinks.push(historyStreamTest);
         });
     }
     async reconnectAll(timeout) {
@@ -58,6 +71,7 @@ class StreamManager {
                     stream.pipe(client[1], { end: false });
                 }
             }
+            this.updateClientCount();
         }
         catch (e) {
             this.streamPromise = null;
@@ -97,6 +111,7 @@ class StreamManager {
                 if (this.activeClients.length < 1) {
                     this.source.stop();
                 }
+                this.updateClientCount();
             });
         }
         catch (e) {
@@ -107,7 +122,13 @@ class StreamManager {
             res.end();
         }
     }
-
+    /**
+     * Emits an event indicating new client count.
+     * @private
+     */
+    updateClientCount() {
+        this.emit("clients.count", this.activeClients.length);
+    }
     //async tryPipe(res) {
     //    try {
     //        const stream = await this.source.getStream();

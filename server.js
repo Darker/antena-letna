@@ -12,6 +12,16 @@ else {
     SETTINGS.authentication = process.env[SETTINGS.password_params.env_name];
 }
 SETTINGS.authentication = JSON.parse(fs.readFileSync("login.json", "utf8").replace(/^\uFEFF/, ''));
+/// Convert Client.js
+{
+    const ClientJS = fs.readFileSync(require.resolve("./web/class/Client.js")).toString();
+    fs.writeFileSync("./auth/Client.js","// NOTE: this file is auto-generated from ./web/class/Client.js\n"+
+        ClientJS
+            .replace(/([\"\'])[^\"\']+\/event\-emitter\.js/ig, "$1eventemitter2")
+            .replace(/import +([a-z0-9_]+) +from \"([^\"]+)\"/ig, "const $1 = require(\"$2\")")
+            .replace(/export default ([a-z0-9_]+)/ig, "module.exports = $1")
+    );
+}
 
 const express = require('express');
 var app = express();
@@ -65,17 +75,24 @@ var io = require('socket.io')(server);
 
 
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session)
-app.use(session({
-    secret: 'napalm',
+const MemoryStore = require('memorystore')(session);
+const sessionStore = new MemoryStore({
+    checkPeriod: 5 * 60 * 60 * 1000
+});
+const SESSION_SECRET = "napalm";
+const sessionMiddleware = session({
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MemoryStore({
-        checkPeriod: 5 * 60 * 60 * 1000
-    }),
+    store: sessionStore,
     cookie: { secure: false, httpOnly: false },
     name: "delet dis"
-}));
+});
+app.use(sessionMiddleware);
+
+io.use(require("express-socket.io-session")(sessionMiddleware, {
+    autoSave: true
+})); 
 
 
 const path = require("path");
@@ -132,37 +149,53 @@ const HISTORY_DIR_TEST = path.join(HISTORY_DIR, "test");
 const HISTORY_DIR_PROD = path.join(HISTORY_DIR, "prod");
 
 const audioManagerTest = new StreamManager(app, "/antena_test.mp3", new CasterStream("http://mxxiv.caster.fm/"));
-
 var fx = require('mkdir-recursive');
-fx.mkdir(HISTORY_DIR_TEST, function (err) {
-    if (err) {
-        console.error("Cannot open/create directory", HISTORY_DIR_TEST);
-        return;
-    }
-    const historyStreamTest = fs.createWriteStream(path.join(HISTORY_DIR_TEST, "history.mp3"), { encoding: null });
-    audioManagerTest.sinks.push(historyStreamTest);
-});
-
 const audioManager = new StreamManager(app, "/antena.mp3", new CasterStream("http://antenaletna.caster.fm/"));
-fx.mkdir(HISTORY_DIR_PROD, function (err) {
-    if (err) {
-        console.error("Cannot open/create directory", HISTORY_DIR_PROD);
-        return;
-    }
-    const historyStream = fs.createWriteStream(path.join(HISTORY_DIR_PROD, "history.mp3"), { encoding: null });
-    audioManager.sinks.push(historyStream);
-});
-
 const localManager = new StreamManager(app, "/local.mp3", localStreamAudio);
 
 
+const RemoteClient = require("./auth/RemoteClient");
+/** @type {RemoteClient[]} **/
+const CLIENTS = [];
+
+
+
+app.post("/error", function (req, res) {
+    var bodyStr = '';
+    req.on("data", function (chunk) {
+        bodyStr += chunk.toString();
+    });
+    req.on("end", function () {
+        res.end("Whatever.");
+        CLIENTS.forEach((client) => {
+            if (client.admin) {
+                client.admin.logClientError(bodyStr);
+            }
+        });
+    });    
+});
+
 io.on('connection', function (socket) {
-    console.log('a user connected');
+    console.log('a user connected', socket.handshake.session.logins);
+    const client = new RemoteClient(socket);
+    CLIENTS.push(client);
+    client.on("destroyMe", function () {
+        const index = CLIENTS.indexOf(client);
+        if (index >= 0) {
+            CLIENTS.splice(index, 1);
+            console.log("Client removed, remaining clients: ", CLIENTS.length);
+        }
+    });
+
+    client.serverConfig = SETTINGS;
+    if (socket.handshake.session.logins) {
+        socket.handshake.session.logins++;
+    }
+    else 
+        socket.handshake.session.logins = 1;
+    socket.handshake.session.save();
 });
 const PORT = process.env.PORT || 3000;
-localStreamAudio.listen(PORT, function() {
-    console.log('listening on *:'+PORT);
-})
-//server.listen(PORT, function () {
-//    console.log('listening on *:'+PORT);
-//});
+localStreamAudio.listen(PORT, function () {
+    console.log('listening on *:' + PORT);
+});
