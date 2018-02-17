@@ -44,6 +44,6 @@
         </div>
     </div>
     <script src="./lib/js.cookie-2.2.0.min.js"></script>
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js" onload="window.dispatchEvent(new CustomEvent('io-ready'))"></script>
 </body>
 </html>

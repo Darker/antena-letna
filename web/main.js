@@ -28,19 +28,31 @@ window.addEventListener("error", function (error) {
 });
 
 
-const SOCKET = io();
-const CLIENT = new LocalClient(SOCKET);
-
-
-async function cheetAdminCallback () {
-    cheet.disable("a d m i n");
-    await new Promise(function (r) { setTimeout(r, 0); });
-    if (!(await CLIENT.makeAdminLoginDialog())) {
-        cheet("a d m i n", cheetAdminCallback);
+function onIo(callback) {
+    if (typeof io == "function") {
+        callback();
     }
-}
-CLIENT.on("makeAdmin", () => { cheet.disable("a d m i n"); });
-cheet("a d m i n", cheetAdminCallback);
+    else {
+        window.addEventListener("io-ready", callback);
+    }
+};
+
+onIo(() => {
+    const SOCKET = io();
+    const CLIENT = new LocalClient(SOCKET);
+
+
+    async function cheetAdminCallback() {
+        cheet.disable("a d m i n");
+        await new Promise(function (r) { setTimeout(r, 0); });
+        if (!(await CLIENT.makeAdminLoginDialog())) {
+            cheet("a d m i n", cheetAdminCallback);
+        }
+    }
+    CLIENT.on("makeAdmin", () => { cheet.disable("a d m i n"); });
+    cheet("a d m i n", cheetAdminCallback);
+});
+
 
 (async function () {
     await DocumentReady;
@@ -49,10 +61,3 @@ cheet("a d m i n", cheetAdminCallback);
 })();
 
 
-
-
-
-/** @type {string} **/
-const SESSION_ID = Cookies.get("delet dis");
-console.log("Session ID: ", SESSION_ID);
-SOCKET.emit("session", SESSION_ID);

@@ -3128,43 +3128,6 @@ var _stringify = __webpack_require__(69);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var cheetAdminCallback = function () {
-    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-        return _regenerator2.default.wrap(function _callee$(_context) {
-            while (1) {
-                switch (_context.prev = _context.next) {
-                    case 0:
-                        _cheet2.default.disable("a d m i n");
-                        _context.next = 3;
-                        return new _promise2.default(function (r) {
-                            setTimeout(r, 0);
-                        });
-
-                    case 3:
-                        _context.next = 5;
-                        return CLIENT.makeAdminLoginDialog();
-
-                    case 5:
-                        if (_context.sent) {
-                            _context.next = 7;
-                            break;
-                        }
-
-                        (0, _cheet2.default)("a d m i n", cheetAdminCallback);
-
-                    case 7:
-                    case "end":
-                        return _context.stop();
-                }
-            }
-        }, _callee, this);
-    }));
-
-    return function cheetAdminCallback() {
-        return _ref.apply(this, arguments);
-    };
-}();
-
 var _cheet = __webpack_require__(65);
 
 var _cheet2 = _interopRequireDefault(_cheet);
@@ -3204,13 +3167,60 @@ window.addEventListener("error", function (error) {
     logError(error.error);
 });
 
-var SOCKET = io();
-var CLIENT = new _LocalClient2.default(SOCKET);
+function onIo(callback) {
+    if (typeof io == "function") {
+        callback();
+    } else {
+        window.addEventListener("io-ready", callback);
+    }
+};
 
-CLIENT.on("makeAdmin", function () {
-    _cheet2.default.disable("a d m i n");
+onIo(function () {
+    var cheetAdminCallback = function () {
+        var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+            return _regenerator2.default.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _cheet2.default.disable("a d m i n");
+                            _context.next = 3;
+                            return new _promise2.default(function (r) {
+                                setTimeout(r, 0);
+                            });
+
+                        case 3:
+                            _context.next = 5;
+                            return CLIENT.makeAdminLoginDialog();
+
+                        case 5:
+                            if (_context.sent) {
+                                _context.next = 7;
+                                break;
+                            }
+
+                            (0, _cheet2.default)("a d m i n", cheetAdminCallback);
+
+                        case 7:
+                        case "end":
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        return function cheetAdminCallback() {
+            return _ref.apply(this, arguments);
+        };
+    }();
+
+    var SOCKET = io();
+    var CLIENT = new _LocalClient2.default(SOCKET);
+
+    CLIENT.on("makeAdmin", function () {
+        _cheet2.default.disable("a d m i n");
+    });
+    (0, _cheet2.default)("a d m i n", cheetAdminCallback);
 });
-(0, _cheet2.default)("a d m i n", cheetAdminCallback);
 
 (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
     var PLAYER;
@@ -3233,11 +3243,6 @@ CLIENT.on("makeAdmin", function () {
         }
     }, _callee2, this);
 }))();
-
-/** @type {string} **/
-var SESSION_ID = Cookies.get("delet dis");
-console.log("Session ID: ", SESSION_ID);
-SOCKET.emit("session", SESSION_ID);
 
 /***/ }),
 /* 78 */
