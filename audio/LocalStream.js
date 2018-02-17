@@ -38,7 +38,7 @@ class LocalStream extends AudioProxy {
          * @type {{[ip_addr:string]:{lastRequest:number,no_requests:number,banned:boolean}}}
          */
         const requestLimiter = {};
-        const MAX_RPS = 5;
+        const MAX_RPS = 10;
 
         this.audioServer = net.createServer((socket) => {
             if (!requestLimiter[socket.remoteAddress]) {
