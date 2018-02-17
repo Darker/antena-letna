@@ -100,6 +100,7 @@ class StreamManager extends EventEmitter {
 
             const id = this.requestIdIncrement++;
             this.activeClients.push([req, res, id, stream]);
+            this.updateClientCount();
             req.on("close", () => {
                 const index = this.activeClients.findIndex((clientInfo) => {
                     return clientInfo[2] == id;

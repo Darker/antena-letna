@@ -159,6 +159,11 @@ const RemoteClient = require("./auth/RemoteClient");
 const CLIENTS = [];
 
 
+audioManagerTest.on("clients.count", function (count) {
+    CLIENTS.forEach((client) => {
+        client.io.emit("clients.listeners", count);
+    });
+});
 
 app.post("/error", function (req, res) {
     var bodyStr = '';
@@ -166,7 +171,7 @@ app.post("/error", function (req, res) {
         bodyStr += chunk.toString();
     });
     req.on("end", function () {
-        res.end("Whatever.");
+        res.end("<html></html>");
         CLIENTS.forEach((client) => {
             if (client.admin) {
                 client.admin.logClientError(bodyStr);
@@ -178,13 +183,17 @@ app.post("/error", function (req, res) {
 io.on('connection', function (socket) {
     console.log('a user connected', socket.handshake.session.logins);
     const client = new RemoteClient(socket);
+    client.all = CLIENTS;
+    socket.emit("clients.listeners", audioManagerTest.activeClients.length);
     CLIENTS.push(client);
+    io.emit("clients.online", CLIENTS.length);
     client.on("destroyMe", function () {
         const index = CLIENTS.indexOf(client);
         if (index >= 0) {
             CLIENTS.splice(index, 1);
             console.log("Client removed, remaining clients: ", CLIENTS.length);
         }
+        io.emit("clients.online", CLIENTS.length);
     });
 
     client.serverConfig = SETTINGS;

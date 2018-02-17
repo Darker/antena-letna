@@ -8,6 +8,16 @@ class LocalClient extends Client {
         super(io);
         this.registerRemoteRPC("adminLogin");
         io.on("makeAdmin", this.makeAdmin.bind(this));
+
+        io.on("clients.listeners", (count) => {
+            console.log("Listeners: ",count)
+            const counter = document.querySelector("#listeners");
+            counter.firstChild.data = count + "";
+        });
+        io.on("clients.online", (count) => {
+            const counter = document.querySelector("#online");
+            counter.firstChild.data = count + "";
+        });
     }
 
     async makeAdminLoginDialog() {
