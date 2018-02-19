@@ -100,46 +100,22 @@ const path = require("path");
 const StreamManager = require("./audio/StreamManager");
 const CasterStream = require("./audio/CasterStream")
 
-//app.get("/es6enable", function (req, res) {
-//    req.session.es6 = true;
-//    res.set("Location", "/index.html");
-//    res.end();
-//});
 
-//app.use(function (err, req, res, next) {
-//    if (req.path == "" || req.path == "/" || req.path == "/index.html") {
-//        if (req.session.es6) {
-//            fs.readFile(path.join(__dirname, "web/index.html"), function (error, result) {
-//                if (error)
-//                    next();
-//                else {
-//                    res.end(result.toString("utf8").replace(
-//                        /<script id="main" type="([^"]+)" src="([^"]+)"><\/script>/i,
-//                        '<script type="module" src="main.js" async> </script>'
-//                    ));
-//                }
-//            });
-//        }
-//    }
-
-//    next();
-//});
-
-//try {
-//    const morgan = require('morgan')
-//    app.use(morgan(function (tokens, req, res) {
-//        return [
-//            tokens.method(req, res),
-//            tokens.url(req, res),
-//            tokens.status(req, res),
-//            tokens.res(req, res, 'content-length'), '-',
-//            tokens['response-time'](req, res), 'ms'
-//        ].join(' ')
-//    }))
-//}
-//catch (e) {
-//    console.log("No morgan package, no logging!");
-//}
+try {
+    const morgan = require('morgan')
+    app.use(morgan(function (tokens, req, res) {
+        return [
+            tokens.method(req, res),
+            tokens.url(req, res),
+            tokens.status(req, res),
+            tokens.res(req, res, 'content-length'), '-',
+            tokens['response-time'](req, res), 'ms'
+        ].join(' ');
+    }))
+}
+catch (e) {
+    console.log("No morgan package, no logging!");
+}
 
 
 
@@ -154,6 +130,7 @@ var fx = require('mkdir-recursive');
 const audioManager = new StreamManager(app, "/antena.mp3", new CasterStream("http://antenaletna.caster.fm/"));
 const localManager = new StreamManager(app, "/local.mp3", localStreamAudio);
 
+const STREAM_MANAGERS = [audioManager, audioManagerTest, localManager];
 
 const RemoteClient = require("./auth/RemoteClient");
 /** @type {RemoteClient[]} **/
@@ -185,6 +162,7 @@ io.on('connection', function (socket) {
     console.log('a user connected', socket.handshake.session.logins);
     const client = new RemoteClient(socket);
     client.all = CLIENTS;
+    client.streams = STREAM_MANAGERS;
     socket.emit("clients.listeners", audioManagerTest.activeClients.length);
     CLIENTS.push(client);
     io.emit("clients.online", CLIENTS.length);

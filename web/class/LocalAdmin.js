@@ -19,8 +19,15 @@ class LocalAdmin {
         this.client.io.on("errlog", this.logError.bind(this));
 
         document.title = document.title.replace(/( \[admin\]|$)/i, " [admin]");
-    }
 
+        this.client.registerRemoteRpc("getStreamList");
+    }
+    /**
+     * @returns {Promise<string[]>}
+     */
+    async getStreamList() {
+        return await this.client.getStreamList();
+    }
     logError(error) {
         try {
             const data = JSON.parse(error);

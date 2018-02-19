@@ -63,10 +63,10 @@ div.header {
     display:inline-block;
     padding: 0;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.44);
-    border: 1px solid grey;
+    background-color: black;
+    border: 1px solid #4D4D4D;
     transition: border-color 0.4s ease;
-    transition: background-color 0.4s ease;
+    
     cursor: pointer;
 }
 @media (max-width: 520px) {
@@ -75,9 +75,22 @@ div.header {
         height: 40pt;
     }
 }
+
 #control_button:hover {
     border-color: black;
-    background-color: rgba(0, 0, 0, 0.1);
+}
+:root {
+    --inner-opacity: 0.8;
+}
+#control_button .icon {
+    --inner-opacity: 0.8;
+}
+#control_button:hover .icon {
+    --inner-opacity: 1;
+}
+
+#control_button:active {
+    box-shadow: 0px 0px 5px 5px white;
 }
 #control_button .icon {
     margin: 0;
@@ -88,8 +101,58 @@ div.header {
     background-position-y: center;
     background-repeat: no-repeat;
     background-size: contain;
-    
+    transition: background-color 0.4s ease;
     display: none;
+}
+
+
+
+#control_button.happy .happy {
+    display: block;
+}
+
+#control_button.sad .sad {
+    display: block;
+}
+
+#control_button.loading .loading {
+    display: block;
+    cursor: wait;
+}
+
+#control_button .happy {
+    background-image: url("img/playing.png");
+    background-color: rgba(227,0,22, var(--inner-opacity));
+}
+
+#control_button .sad {
+    background-image: url("img/stopped.png");
+    background-color: rgba(0,144,21, var(--inner-opacity));
+}
+
+@-webkit-keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}
+#control_button .icon.loading {
+    background-image: url("img/loading.png");
+    animation: rotation 2s infinite linear;
+    background-color: rgba(255, 211, 0,var(--inner-opacity));
 }
 
 div.counter {
@@ -98,11 +161,6 @@ div.counter {
     display: inline-block;
     margin: 0;
     padding: 0;
-}
-@media (max-width: 520px) {
-    div.counter {
-        height: 40pt;
-    }
 }
 div.counter div.inner {
     margin: 0;
@@ -113,31 +171,16 @@ div.counter div.inner {
     justify-content: center;
     height: 100%;
 }
+
 div.counter div.inner div {
-    display:block;
-}
-#control_button.happy .happy {
-    display:block;
-}
-#control_button.sad .sad {
     display: block;
 }
-#control_button.loading .loading {
-    display: block;
-    cursor:wait;
+@media (max-width: 520px) {
+    div.counter {
+        height: 40pt;
+    }
 }
-#control_button .happy {
-    background-image: url("img/happy.png");
-    background-color:rgba(36, 142, 0, 0.51);
-}
-#control_button .sad {
-    background-image: url("img/sad.png");
-    background-color: rgba(200, 0, 0, 0.51);
-}
-#control_button .loading {
-    background-image: url("img/unknown.png");
-    background-color: rgba(0, 0, 100, 0.51);
-}
+
 div.volume {
     position: relative;
     width: 15em;

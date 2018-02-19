@@ -1,6 +1,8 @@
 ﻿const Client = require("./Client");
 const RemoteAdmin = require("./RemoteAdmin")
 
+
+
 class RemoteClient extends Client {
     /**
      * 
@@ -18,6 +20,10 @@ class RemoteClient extends Client {
         this.io.on('disconnect', () => {
             this.emit("destroyMe");
         });
+        /** @type {RemoteClient[]} **/
+        this.all = null;
+        /** @type {StreamManager[]} **/
+        this.streams = null;
     }
     get session() {
         return this.io.handshake.session;

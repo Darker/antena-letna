@@ -56,7 +56,7 @@ onIo(() => {
 
 (async function () {
     await DocumentReady;
-    const PLAYER = new Player(document.querySelector("#player_container"));
+    const PLAYER = new Player(document.querySelector("#player_container"), "antena.mp3");
     window.PLAYER = PLAYER;
 })();
 

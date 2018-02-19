@@ -92,6 +92,9 @@
     <Compile Include="web\class\Player.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="web\class\ui\TabbedView.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="web\class\VolumeEditor.js">
       <SubType>Code</SubType>
     </Compile>
@@ -115,10 +118,24 @@
     <Content Include="web\class\dialogs\dialogs.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="web\img\antena-letna.svg" />
+    <Content Include="web\img\antena-letna.zip" />
+    <Content Include="web\img\favicon.xcf" />
     <Content Include="web\img\happy.png" />
+    <Content Include="web\img\img.zip" />
+    <Content Include="web\img\loading.png" />
+    <Content Include="web\img\loading_small.png" />
     <Content Include="web\img\logo.png" />
     <Content Include="web\img\logo.xcf" />
+    <Content Include="web\img\offline.png" />
+    <Content Include="web\img\offline_small.png" />
+    <Content Include="web\img\playing.png" />
+    <Content Include="web\img\playing_small.png" />
     <Content Include="web\img\sad.png" />
+    <Content Include="web\img\stopped.png" />
+    <Content Include="web\img\stopped_small.png" />
+    <Content Include="web\img\tlacitka%281%29.cdr" />
+    <Content Include="web\img\tlacitka.cdr" />
     <Content Include="web\img\unknown.png" />
     <Content Include="web\index.html">
       <SubType>Code</SubType>
@@ -130,6 +147,7 @@
     <Folder Include="promises\" />
     <Folder Include="web\" />
     <Folder Include="web\class\dialogs\" />
+    <Folder Include="web\class\ui\" />
     <Folder Include="web\img\" />
     <Folder Include="web\class\" />
     <Folder Include="web\lib\" />

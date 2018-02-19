@@ -5,8 +5,9 @@ class Player {
      * 
      * @param {HTMLDivElement} htmlElement
      */
-    constructor(htmlElement) {
+    constructor(htmlElement, audioPath) {
         this.audio = new Audio();
+        this.audioPath = audioPath;
         this.div = htmlElement;
         this.state = Player.STATE_STOPPED;
         this.controlButton = this.div.querySelector("#control_button");
@@ -24,6 +25,7 @@ class Player {
                     this.drawPlayingState(Player.STATE_PLAYING);
             }
         );
+
         this.audio.addEventListener("volumechange", () => {
             this.volumeWidget.volume = this.audio.volume;
         });
@@ -60,10 +62,15 @@ class Player {
             this.drawPlayingState(Player.STATE_STOPPED);
         }
         else {
-            this.audio.setAttribute("src", "antena_test.mp3");
+            this.audio.setAttribute("src", this.audioPath);
             this.audio.load();
             this.audio.play();
         }
+    }
+    switchTrack(mp3path) {
+        this.audio.setAttribute("src", this.audioPath=mp3path);
+        this.audio.load();
+        this.audio.play();
     }
     stopAudio() {
         this.audio.setAttribute("src", "");
