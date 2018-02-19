@@ -137,11 +137,24 @@ const RemoteClient = require("./auth/RemoteClient");
 const CLIENTS = [];
 
 
-audioManagerTest.on("clients.count", function (count) {
+
+
+for (let i = 0, l = STREAM_MANAGERS.length; i < l; ++i) {
+    STREAM_MANAGERS[i].on("clients.count", postListenerCounts);
+}
+
+
+function postListenerCounts() {
+    var count = 0;
+    for (let i = 0, l = STREAM_MANAGERS.length; i < l; ++i) {
+        const item = STREAM_MANAGERS[i];
+        count += item.activeClients.length;
+    }
     CLIENTS.forEach((client) => {
         client.io.emit("clients.listeners", count);
     });
-});
+}
+
 
 app.post("/error", function (req, res) {
     var bodyStr = '';
