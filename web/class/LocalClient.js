@@ -3,6 +3,7 @@ import LocalAdmin from "./LocalAdmin.js";
 import Prompt from "./dialogs/Prompt.js"
 import RpcDialog from "./dialogs/RpcDialog.js"
 import Alert from "./dialogs/Alert.js";
+
 class LocalClient extends Client {
     constructor(io) {
         super(io);
@@ -18,6 +19,8 @@ class LocalClient extends Client {
             const counter = document.querySelector("#online");
             counter.firstChild.data = count + "";
         });
+        /** @type {LocalAdmin} **/
+        this.admin = null;
     }
 
     async makeAdminLoginDialog() {
@@ -35,10 +38,11 @@ class LocalClient extends Client {
                 }
                 else {
                     await (new Alert("Invalid password!")).exec();
-                    //console.error("Cannot log in. Invalid password?");
+                    //
                 }
             }
             catch (e) {
+                console.error("Cannot log in.",e);
                 loadingDialog.accept();
             }
         }

@@ -13,7 +13,7 @@ class RemoteAdmin {
             this.client.session.admin = true;
             this.client.session.save();
         }
-        this.client.registerLocalRpc("getStreamList", this.getStreamList.bind(this));
+        this.client.registerLocalRPC("getStreamList", this.getStreamList.bind(this));
     }
     logClientError(errdata) {
         this.client.io.emit("errlog", errdata);

@@ -44,7 +44,7 @@ onIo(() => {
 
     async function cheetAdminCallback() {
         cheet.disable("a d m i n");
-        await new Promise(function (r) { setTimeout(r, 0); });
+        await new Promise(function (r) { setTimeout(r, 1); });
         if (!(await CLIENT.makeAdminLoginDialog())) {
             cheet("a d m i n", cheetAdminCallback);
         }

@@ -20,7 +20,7 @@ class LocalAdmin {
 
         document.title = document.title.replace(/( \[admin\]|$)/i, " [admin]");
 
-        this.client.registerRemoteRpc("getStreamList");
+        this.client.registerRemoteRPC("getStreamList");
     }
     /**
      * @returns {Promise<string[]>}
