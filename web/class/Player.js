@@ -48,7 +48,7 @@ class Player {
         this.audio.addEventListener("error",
             /** @param {Event} event **/
             (event) => {
-                this.drawPlayingState(Player.STATE_STOPPED);
+                this.drawPlayingState(Player.STATE_OFFLINE);
                 if (this.audio.getAttribute('src') != "")
                     this.stopAudio();
             })
@@ -92,7 +92,7 @@ class Player {
         }
         else
             this.state = force;
-        this.controlButton.classList.remove("sad", "loading", "happy");
+        this.controlButton.classList.remove("sad", "loading", "happy", "offline");
         switch (this.state) {
             case Player.STATE_LOADING: {
                 this.controlButton.classList.add("loading");
@@ -109,6 +109,11 @@ class Player {
                 console.log("Player state: stopped");
                 break;
             }
+            case Player.STATE_OFFLINE: {
+                this.controlButton.classList.add("offline");
+                console.log("Player state: offline");
+                break;
+            }
             default: {
                 throw new Error("Illegal player state.");
             }
@@ -119,6 +124,7 @@ class PlayerState { };
 Player.STATE_PLAYING = new PlayerState();
 Player.STATE_STOPPED = new PlayerState();
 Player.STATE_LOADING = new PlayerState();
+Player.STATE_OFFLINE = new PlayerState();
 
 
 export default Player;

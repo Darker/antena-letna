@@ -28,6 +28,17 @@ class RemoteClient extends Client {
     get session() {
         return this.io.handshake.session;
     }
+    /**
+     * Adds stream ref to the client
+     * @param {StreamManager[]} streams
+     */
+    initStreams(streams) {
+        this.streams = streams;
+    }
+
+    sendListenerCount() {
+
+    }
     authAdmin(password) {
         console.log("Login attempt!", password, " Real password: ", this.serverConfig.authentication.password);
         if (password == this.serverConfig.authentication.password) {

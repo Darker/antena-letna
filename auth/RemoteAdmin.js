@@ -20,8 +20,9 @@ class RemoteAdmin {
     }
     getStreamList() {
         const list = [];
-        for (let i = 0, l = this.client.streams; i < l; ++i) {
-            const item = array[i];
+        for (let i = 0, l = this.client.streams.length; i < l; ++i) {
+            const item = this.client.streams[i].name;
+            list.push(item);
         }
         return list;
     }

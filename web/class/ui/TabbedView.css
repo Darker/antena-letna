@@ -1,0 +1,75 @@
+﻿.TabbedView {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+.TabbedView div.tabs {
+    box-sizing: content-box;
+    padding: 0;
+    height: 1.5em;
+    margin: 0;
+    border-bottom: 2pt solid black;
+
+    background-color: #111111;
+}
+
+.TabbedView div.tabs div.tab {
+    box-sizing: border-box;
+
+    display: inline-block;
+    padding: 0;
+    height: 1em;
+
+    margin: 0;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    line-height: 1em;
+    border-color: #808080;
+    color: white;
+    border-style: solid;
+    border-width: 0px;
+    border-right-width:1pt;
+
+    padding-left: 2ch;
+    padding-right: 2ch;
+
+    background-color: #020314;
+    cursor: pointer;
+}
+
+
+.TabbedView div.tabs div.tab:last-child {
+    border-right-width: 0pt;
+}
+.TabbedView div.tabs div.tab.active {
+    background-color: #000f3e;
+
+    cursor: default;
+
+    margin-top: 0em;
+    margin-bottom: 0em;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    height: 1.5em;
+}
+
+.TabbedView div.tabs div.tab:hover {
+    background-color: #030927;
+
+    margin-top: 0em;
+    margin-bottom: 0em;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    height: 1.5em;
+}
+.TabbedView div.tabs div.tab.active:hover {
+    background-color: #000f3e;
+}
+.TabbedView div.contents {
+    width: 100%;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}

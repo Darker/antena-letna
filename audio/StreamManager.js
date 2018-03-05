@@ -95,6 +95,7 @@ class StreamManager extends EventEmitter {
             const stream = await this.streamPromise;
             this.streamPromise = null;
             this.connected = true;
+            this.emit("online", true);
             stream.pipe(res, { end: false });
 
 
@@ -117,6 +118,7 @@ class StreamManager extends EventEmitter {
         }
         catch (e) {
             this.streamPromise = null;
+            this.emit("online", false);
             res.set("Content-Length", "0");
             res.set("X-Debug-Error", e.message);
             res.status(503);

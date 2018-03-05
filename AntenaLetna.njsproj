@@ -92,7 +92,13 @@
     <Compile Include="web\class\Player.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="web\class\RateLimited.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="web\class\ui\TabbedView.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\ui\VoteButtons.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="web\class\VolumeEditor.js">
@@ -116,6 +122,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="web\class\dialogs\dialogs.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="web\class\ui\TabbedView.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="web\class\ui\VoteButtons.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="web\img\antena-letna.svg" />

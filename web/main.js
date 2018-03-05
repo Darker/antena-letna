@@ -5,6 +5,8 @@ import DocumentReady from "./class/DocumentReady.js";
 
 
 import LocalClient from "./class/LocalClient.js";
+import VoteButtons from "./class/ui/VoteButtons.js";
+
 
 function logError(error) {
     console.warn("Error ", error.message, "\n", error.stack);
@@ -58,6 +60,14 @@ onIo(() => {
     await DocumentReady;
     const PLAYER = new Player(document.querySelector("#player_container"), "antena.mp3");
     window.PLAYER = PLAYER;
+
+    // Test vote button
+    //const but = new VoteButtons.Button(null, "img/happy.png");
+    //document.body.appendChild(but.div);
+
+    const buttons = new VoteButtons();
+    buttons.addButtonNamed("img/happy.png", "happy");
+    document.body.appendChild(buttons.html);
 })();
 
 
