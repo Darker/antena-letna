@@ -54,6 +54,9 @@
     <Compile Include="auth\RemoteClient.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="es6import.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="webpack.config.js" />
     <Compile Include="web\class\dialogs\Alert.js">
       <SubType>Code</SubType>

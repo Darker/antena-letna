@@ -13,16 +13,16 @@ else {
     console.log("Loading password from process.env[\"" + SETTINGS.password_params.env_name+"\"]");
     SETTINGS.authentication = { password: process.env[SETTINGS.password_params.env_name] };
 }
-/// Convert Client.js
-{
-    const ClientJS = fs.readFileSync(require.resolve("./web/class/Client.js")).toString();
-    fs.writeFileSync("./auth/Client.js","// NOTE: this file is auto-generated from ./web/class/Client.js\n"+
-        ClientJS
-            .replace(/([\"\'])[^\"\']+\/event\-emitter\.js/ig, "$1eventemitter2")
-            .replace(/import +([a-z0-9_]+) +from \"([^\"]+)\"/ig, "const $1 = require(\"$2\")")
-            .replace(/export default ([a-z0-9_]+)/ig, "module.exports = $1")
-    );
-}
+///// Convert Client.js
+//{
+//    const ClientJS = fs.readFileSync(require.resolve("./web/class/Client.js")).toString();
+//    fs.writeFileSync("./auth/Client.js","// NOTE: this file is auto-generated from ./web/class/Client.js\n"+
+//        ClientJS
+//            .replace(/([\"\'])[^\"\']+\/event\-emitter\.js/ig, "$1eventemitter2")
+//            .replace(/import +([a-z0-9_]+) +from \"([^\"]+)\"/ig, "const $1 = require(\"$2\")")
+//            .replace(/export default ([a-z0-9_]+)/ig, "module.exports = $1")
+//    );
+//}
 
 const express = require('express');
 var app = express();

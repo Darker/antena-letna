@@ -1,5 +1,7 @@
-﻿const Client = require("./Client");
-const RemoteAdmin = require("./RemoteAdmin")
+﻿/** @type {NodeRequire} **/
+const requireES6 = require("../es6import");
+const Client = requireES6(require.resolve("../web/class/Client"));
+const RemoteAdmin = require("./RemoteAdmin");
 
 
 
