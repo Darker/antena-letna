@@ -1,6 +1,10 @@
 ﻿/** @type {NodeRequire} **/
 const requireES6 = require("../es6import");
+/** @type {Client} **/
 const Client = requireES6(require.resolve("../web/class/Client"));
+/** @type {RateLimited} **/
+const RateLimited = requireES6(require.resolve("../web/class/RateLimited"));
+
 const RemoteAdmin = require("./RemoteAdmin");
 
 
@@ -22,6 +26,12 @@ class RemoteClient extends Client {
         this.io.on('disconnect', () => {
             this.emit("destroyMe");
         });
+
+        this.doVoteLimited = new RateLimited(this.doVote.bind(this), 4);
+
+        this.io.on("vote", (voteName) => {
+            this.doVoteLimited.do(voteName);
+        });
         /** @type {RemoteClient[]} **/
         this.all = null;
         /** @type {StreamManager[]} **/
@@ -36,6 +46,10 @@ class RemoteClient extends Client {
      */
     initStreams(streams) {
         this.streams = streams;
+    }
+
+    doVote(voteName) {
+        this.emit("vote", voteName);
     }
 
     sendListenerCount() {

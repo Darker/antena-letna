@@ -1,4 +1,5 @@
-﻿const EventEmitter = require("eventemitter2");
+﻿/** @type {NodeJS.EventEmitter} **/
+const EventEmitter = require("eventemitter2");
 /**
  * @emits AudioProxy#end
  * @emits AudioProxy#streamReady
@@ -8,6 +9,12 @@ class AudioProxy extends EventEmitter {
         super();
         /** @type {NodeJS.ReadableStream} **/
         this.stream = null;
+    }
+    onStreamReady(callback) {
+        this.on("streamReady", callback);
+        if (this.stream) {
+            callback(this.stream);
+        }
     }
     /**
      * @private
@@ -51,6 +58,7 @@ class AudioProxy extends EventEmitter {
         if (this.stream) {
             this.stopPrivate();
             this.stream = null;
+            this.emit("end");
         }
     }
     stopPrivate() {}

@@ -7,6 +7,24 @@ const authParser = require('basic-auth');
 
 const ProxyStream = require('stream').Transform;
 
+const SOURCE_OK_HEADER = "HTTP/1.0 200 OK\r\n\r\n";
+    //+ "Server: Icecast 2.5.0\r\n"
+    //+ "Connection: Close\r\n"
+    //+ "Accept-Encoding: identity\r\n"
+    //+ "Allow: GET, SOURCE\r\n"
+    //+ "Cache-Control: no-cache\r\n"
+    //+ "Expires: Mon, 26 Jul 1997 05:00:00 GMT\r\n"
+    //+ "Pragma: no-cache\r\n\r\n";
+
+const PUT_OK_HEADER = "HTTP/1.1 100 Continue\r\n"
+    + "Server: Icecast 2.5.0\r\n"
+    + "Connection: Close\r\n"
+    + "Accept-Encoding: identity\r\n"
+    + "Allow: PUT, GET, SOURCE\r\n"
+    + "Cache-Control: no-cache\r\n"
+    + "Expires: Mon, 26 Jul 1997 05:00:00 GMT\r\n"
+    + "Pragma: no-cache\r\n\r\n";
+
 const SocketHeaderReader = require("./SocketHeaderReader");
 ///admin/metadata?pass=changemenow&mode=updinfo&mount=/stream.mp3&song= 404 153 - 2.402 ms
 const ok_xml = `<?xml version="1.0"?>
@@ -15,7 +33,7 @@ const ok_xml = `<?xml version="1.0"?>
   <return>1</return>
 </iceresponse>
 `;
-
+const PassThrough = require('stream').PassThrough;
 const ok_response = "HTTP/1.0 200 OK\r\nContent-Type: text/xml\r\nContent-Length: 120\r\n\r\n";
 class LocalStream extends AudioProxy {
     /**
@@ -30,7 +48,6 @@ class LocalStream extends AudioProxy {
         this.streamSocket = null;
         this.proxy = new ProxyStream({
             transform: function (data, encoding, callback) {
-                //console.log("ICE: data!");
                 callback(null, data);
             }
         });
@@ -88,6 +105,7 @@ class LocalStream extends AudioProxy {
                     try {
                         const headersHead = response.headers.substr(0, response.headers.indexOf("\n"));
                         const headersRest = response.headers.substr(response.headers.indexOf("\n") + 1);
+                        console.log("ICE HEADERS: ", response.headers);
                         /** @type {{name:string, pass:string}} **/
                         const auth = authParser.parse(headerParser(headersRest).authorization);
                         if (auth.pass != this.password) {
@@ -104,7 +122,9 @@ class LocalStream extends AudioProxy {
                         //}
                         this.streamSocket = response.socket;
                         response.socket.pipe(this.proxy, { end: false });
+                        response.socket.write(SOURCE_OK_HEADER);
                         this.hasStream = true;
+
 
 
                         response.socket.on("close", () => {
@@ -137,6 +157,7 @@ class LocalStream extends AudioProxy {
         if (this.streamSocket) {
             console.error("DESTROYING STREAM: " + reason);
             this.destroySocket(reason, this.streamSocket);
+            this.streamSocket.unpipe(this.proxy);
             this.streamSocket = null;
             this.hasStream = false;
         }
@@ -145,6 +166,7 @@ class LocalStream extends AudioProxy {
         if (socket) {
             socket.end(reason);
             socket.on("error", (e) => { });
+            
             socket.destroy();
         }
     }

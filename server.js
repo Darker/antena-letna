@@ -136,8 +136,19 @@ const RemoteClient = require("./auth/RemoteClient");
 /** @type {RemoteClient[]} **/
 const CLIENTS = [];
 
+const VideoStreamOutput = require("./audio/VideoStreamOutput");
+const VIDEO = new VideoStreamOutput(localStreamAudio, path.join(__dirname, "web/img/antena-letna-video.png"));
 
-
+app.get("/stream.mp4", function (req, res) {
+    res.set("Accept-Ranges", "none");
+    res.set("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.set("Pragma", "no-cache");
+    res.set("Expires", "0");
+    res.set("Content-Type", "video/mp4");
+    res.set("Transfer-Encoding", "identity");
+    VIDEO.output.pipe(res, { end: true });
+    VIDEO.ffmpegInit();
+});
 
 for (let i = 0, l = STREAM_MANAGERS.length; i < l; ++i) {
     STREAM_MANAGERS[i].on("clients.count", postListenerCounts);

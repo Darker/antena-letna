@@ -11,7 +11,8 @@ function transformPath(originalPath) {
     const dirname = path.dirname(originalPath);
     const basename = path.basename(originalPath);
     const newdir = path.join(dirname, "es6_transpiled_import");
-    fs.mkdirSync(newdir);
+    if (!fs.existsSync(newdir))
+        fs.mkdirSync(newdir);
     return path.join(newdir, basename);
 }
 

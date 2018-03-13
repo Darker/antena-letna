@@ -1,6 +1,7 @@
 ﻿const AudioProxy = require("../AudioProxy");
 const PromiseTimeout = require("../promises/PromiseTimeout");
 const EventEmitter = require("eventemitter2");
+const DataSink = require("./DataSink");
 const fx = require('mkdir-recursive');
 class StreamManager extends EventEmitter {
     /**
@@ -20,6 +21,8 @@ class StreamManager extends EventEmitter {
         /** @type {NodeJS.WritableStream[]} array of passive sinks, all data will be piped there **/
         this.sinks = [];
 
+        this.dataSink = new DataSink();
+
         this.requestIdIncrement = 0;
         this.retryCount = 0;
         this.connected = false;
@@ -29,10 +32,8 @@ class StreamManager extends EventEmitter {
             this.reconnectAll(1000);
         });
         this.source.on("streamReady", (stream) => {
-            for (let i = 0, l = this.sinks.length; i < l; ++i) {
-                const sink = this.sinks[i];
-                stream.pipe(sink, { end: false });
-            }
+            console.log("Connecting all clients of ", this.name);
+            this.connectAllToStream(stream);
         });
     }
     setHistoryFile(path) {
@@ -65,11 +66,8 @@ class StreamManager extends EventEmitter {
             const stream = await this.streamPromise;
             this.streamPromise = null;
             if (stream.readable) {
-                this.connected = true;
-                for (let i = 0, l = this.activeClients.length; i < l; ++i) {
-                    const client = this.activeClients[i];
-                    stream.pipe(client[1], { end: false });
-                }
+                console.log("Reconnect: Connecting all clients of ", this.name);
+                this.connectAllToStream(stream);
             }
             this.updateClientCount();
         }
@@ -78,6 +76,18 @@ class StreamManager extends EventEmitter {
             this.retryCount++;
             return await this.reconnectAll(timeout);
         }
+    }
+    /**
+     * @private
+     * @param {NodeJS.ReadableStream} stream of incoming data
+     */
+    connectAllToStream(stream) {
+        this.connected = true;
+        for (let i = 0, l = this.activeClients.length; i < l; ++i) {
+            const client = this.activeClients[i];
+            stream.pipe(client[1], { end: false });
+        }
+        stream.pipe(this.dataSink);
     }
     /**
      * 
@@ -110,9 +120,9 @@ class StreamManager extends EventEmitter {
                     this.activeClients[index][3].unpipe(this.activeClients[index][1]);
                     this.activeClients.splice(index, 1);
                 }
-                if (this.activeClients.length < 1) {
-                    this.source.stop();
-                }
+                //if (this.activeClients.length < 1) {
+                //    this.source.stop();
+                //}
                 this.updateClientCount();
             });
         }

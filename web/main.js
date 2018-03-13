@@ -58,7 +58,7 @@ onIo(() => {
 
 (async function () {
     await DocumentReady;
-    const PLAYER = new Player(document.querySelector("#player_container"), "antena.mp3");
+    const PLAYER = new Player(document.querySelector("#player_container"), "local.mp3");
     window.PLAYER = PLAYER;
 
     // Test vote button

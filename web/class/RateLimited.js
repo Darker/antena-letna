@@ -50,3 +50,4 @@ class RateLimited extends EventEmitter {
         }
     }
 }
+export default RateLimited;
