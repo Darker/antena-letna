@@ -10,6 +10,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "amfjs": "^1.3.1",
     "basic-auth": "^2.0.0",
     "eventemitter2": "^5.0.1",
     "express": "^4.16.2",

@@ -5,6 +5,7 @@
     <Name>AntenaLetna</Name>
     <RootNamespace>AntenaLetna</RootNamespace>
     <Environment>stream_password=napalm</Environment>
+    <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -12,7 +13,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>2fb8985d-26b8-49f1-a30e-14a05df30483</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>server.js</StartupFile>
+    <StartupFile>audio\rtmp\RTMPTest.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -42,6 +43,30 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="audio\RawStreamProxy.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\rtmp\RTMPAbstractMessage.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\rtmp\RTMPClient.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\rtmp\RTMPHandshakeMessage.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\rtmp\RTMPHeader.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\rtmp\RTMPMessage.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\rtmp\RTMPMessageAMF.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\rtmp\RTMPStaticData.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="audio\rtmp\RTMPTest.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="audio\SocketHeaderReader.js">
@@ -87,6 +112,9 @@
     </Compile>
     <Compile Include="server.js" />
     <Compile Include="web\cheet.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="web\class\fbasync\FBAsync.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="web\class\LocalAdmin.js">
@@ -167,11 +195,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="audio\" />
+    <Folder Include="audio\rtmp\" />
     <Folder Include="auth\" />
     <Folder Include="votes\" />
     <Folder Include="promises\" />
     <Folder Include="web\" />
     <Folder Include="web\class\dialogs\" />
+    <Folder Include="web\class\fbasync\" />
     <Folder Include="web\class\ui\" />
     <Folder Include="web\img\" />
     <Folder Include="web\class\" />

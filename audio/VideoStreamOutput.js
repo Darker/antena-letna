@@ -3,6 +3,7 @@ const ProxyStream = require('stream').Transform;
 const ffmpeg = require("fluent-ffmpeg");
 const PassThrough = require('stream').PassThrough;
 const child_process = require("child_process");
+const net = require("net");
 class VideoStreamOutput {
     /**
      * 
@@ -33,6 +34,8 @@ class VideoStreamOutput {
             this.oldStream = this.lastStream;
             this.lastStream.pipe(this.inputProxy, { end: false });
         }
+    }
+    startFBStream() {
 
     }
     ffmpegInit() {
